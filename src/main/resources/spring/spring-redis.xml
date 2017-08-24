@@ -31,9 +31,15 @@
         <constructor-arg name="port" value="6381"></constructor-arg>
         <constructor-arg name="nodeName" value="192.168.64.128:789"></constructor-arg>
     </bean>
+
     <util:map id="jedisPoolMap">
         <entry key="jedisPoolShard1" value-ref="jedisPoolShard1" />
         <entry key="jedisPoolShard2" value-ref="jedisPoolShard2"/>
         <entry key="jedisPoolShard3" value-ref="jedisPoolShard3"/>
     </util:map>
+
+    <bean id="redisShardService" class="cn.wannshan.j2ee.cache.RedisShardService" init-method="init">
+
+        <property name="jedisPoolMap" ref="jedisPoolMap"></property>
+    </bean>
 </beans>

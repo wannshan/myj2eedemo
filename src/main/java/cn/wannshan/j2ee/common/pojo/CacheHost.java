@@ -6,13 +6,15 @@ package cn.wannshan.j2ee.common.pojo;
  */
 public class CacheHost {
     private String name;
+    private String hashName;
     private String ip;
     private Integer port;
 
-    public CacheHost(String name, String ip, Integer port) {
+    public CacheHost(String name, String hashName,String ip, Integer port) {
         this.name = name;
         this.ip = ip;
         this.port = port;
+        this.hashName=hashName;
     }
 
     public String getName() {
@@ -37,5 +39,13 @@ public class CacheHost {
 
     public void setPort(Integer port) {
         this.port = port;
+    }
+
+    public String getHashName() {
+        return hashName;
+    }
+
+    public void setHashName(String hashName) {
+        this.hashName = hashName;
     }
 }

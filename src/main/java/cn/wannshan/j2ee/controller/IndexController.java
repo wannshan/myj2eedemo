@@ -1,6 +1,7 @@
 package cn.wannshan.j2ee.controller;
 
-import cn.wannshan.j2ee.cache.RedisUtil;
+import cn.wannshan.j2ee.cache.RedisShardService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -9,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class IndexController {
-
+    @Autowired
+    private  RedisShardService redisShardService;
     @RequestMapping("/index")
     public String hello(){
         System.out.println("hello world");
@@ -18,12 +20,13 @@ public class IndexController {
 
     @RequestMapping("/testCache")
     public String testCache(){
+        Long start=System.currentTimeMillis();
         for(int i=1;i<100000;i++){
             String key=String.valueOf(i);
-            RedisUtil redisUtil=new RedisUtil();
-            redisUtil.selectRedisPool(key);
-            redisUtil.setValue(key,"test"+i);
+            redisShardService.selectRedisPool(key);
+            redisShardService.setValue(key, "test" + i);
         }
+        System.out.println("save cache take:"+(System.currentTimeMillis()-start));
         return "redirect:/index.jsp";
     }
 }

@@ -13,10 +13,7 @@ public class MyJedisPool extends JedisPool {
         super(poolConfig,host,port);
         this.nodeName=nodeName;
     }
-
     public String getNodeName() {
         return nodeName;
     }
-
-
 }
