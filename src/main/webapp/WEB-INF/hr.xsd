@@ -2,7 +2,7 @@
            xmlns:hr="http://j2eeweb.wannshan.cn/hr/schemas"
            elementFormDefault="qualified"
            targetNamespace="http://j2eeweb.wannshan.cn/hr/schemas">
-
+  <!--两个**Request element名称 每个对应一个operation,operation 名称是saveCountry-->
     <xs:element name="saveCountryRequest">
         <xs:complexType>
             <xs:sequence>
@@ -18,7 +18,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-
+    <!--两个**Request element名称-->
     <xs:element name="getCountryRequest">
         <xs:complexType>
             <xs:sequence>

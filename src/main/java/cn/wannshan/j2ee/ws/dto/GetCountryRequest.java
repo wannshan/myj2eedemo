@@ -1,24 +1,38 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
 package cn.wannshan.j2ee.ws.dto;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-/**
- * 文件功能：xxxx
- * Created by  on 2018/1/23.
- */
-@XmlRootElement(name = "getCountryRequest", namespace="http://j2eeweb.wannshan.cn/hr/schemas")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(
+        name = "",
+        propOrder = {"name"}
+)
+@XmlRootElement(
+        name = "getCountryRequest"
+)
 public class GetCountryRequest {
+    @XmlElement(
+            required = true
+    )
+    protected String name;
 
-
-    private  String name;
-
-    @XmlElement(name = "name" ,namespace="http://j2eeweb.wannshan.cn/hr/schemas")
-    public String getName() {
-        return name;
+    public GetCountryRequest() {
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String value) {
+        this.name = value;
     }
 }

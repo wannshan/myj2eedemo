@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://j2eeweb.wannshan.cn/hr/schemas">
+    <types>
+        <schema elementFormDefault="qualified" targetNamespace="http://j2eeweb.wannshan.cn/hr/schemas">
+            <element name="saveCountryRequest">
+                <complexType>
+                    <sequence>
+                        <element name="country" type="hr:country"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="saveCountryResponse">
+                <complexType>
+                    <sequence>
+                        <element name="name" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getCountryRequest">
+                <complexType>
+                    <sequence>
+                        <element name="name" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="getCountryResponse">
+                <complexType>
+                    <sequence>
+                        <element name="country" type="hr:country"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <complexType name="country">
+                <sequence>
+                    <element name="name" type="string"/>
+                    <element name="population" type="int"/>
+                    <element name="capital" type="string"/>
+                </sequence>
+            </complexType>
+        </schema>
+    </types>
+    <message name="getCountryRequest">
+        <part element="tns:getCountryRequest" name="getCountryRequest">
+        </part>
+    </message>
+    <message name="getCountryResponse">
+        <part element="tns:getCountryResponse" name="getCountryResponse">
+        </part>
+    </message>
+    <message name="saveCountryRequest">
+        <part element="tns:saveCountryRequest" name="saveCountryRequest">
+        </part>
+    </message>
+    <message name="saveCountryResponse">
+        <part element="tns:saveCountryResponse" name="saveCountryResponse">
+        </part>
+    </message>
+    <portType name="query">
+        <operation name="getCountry">
+            <input message="tns:getCountryRequest" name="getCountryRequest">
+            </input>
+            <output message="tns:getCountryResponse" name="getCountryResponse">
+            </output>
+        </operation>
+        <operation name="saveCountry">
+            <input message="tns:saveCountryRequest" name="saveCountryRequest">
+            </input>
+            <output message="tns:saveCountryResponse" name="saveCountryResponse">
+            </output>
+        </operation>
+    </portType>
+    <binding name="querySoap11" type="tns:query">
+        <binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getCountry">
+            <operation soapAction=""/>
+            <input name="getCountryRequest">
+                <body use="literal"/>
+            </input>
+            <output name="getCountryResponse">
+                <body use="literal"/>
+            </output>
+        </operation>
+        <operation name="saveCountry">
+            <operation soapAction=""/>
+            <input name="saveCountryRequest">
+                <body use="literal"/>
+            </input>
+            <output name="saveCountryResponse">
+                <body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="queryService">
+        <port binding="tns:querySoap11" name="querySoap11">
+            <address location="/webservice/queryService/"/>
+        </port>
+    </service>
+</definitions>

@@ -29,6 +29,7 @@ public class MyTest extends AbstractTestNGSpringContextTests {
         // this package must match the package in the <generatePackage> specified in
         // pom.xml
         marshaller.setContextPath("cn.wannshan.j2ee.ws.dto");
+//        marshaller.s
         webServiceTemplate.setMarshaller(marshaller);
         webServiceTemplate.setUnmarshaller(marshaller);
 

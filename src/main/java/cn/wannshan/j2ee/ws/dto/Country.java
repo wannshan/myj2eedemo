@@ -1,51 +1,52 @@
 package cn.wannshan.j2ee.ws.dto;
 
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
-/**
- * 文件功能：xxxx
- * Created by  on 2018/1/23.
- */
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(
+        name = "country",
+        propOrder = {"name", "population", "capital"}
+)
 public class Country {
+    @XmlElement(
+            required = true
+    )
+    protected String name;
+    protected int population;
+    @XmlElement(
+            required = true
+    )
+    protected String capital;
 
-    private String name;
-    private Integer population;
-    private String capital;
-    private String currency;
+    public Country() {
+    }
 
-    @XmlElement(name = "name",namespace="http://j2eeweb.wannshan.cn/hr/schemas")
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String value) {
+        this.name = value;
     }
 
-    @XmlElement(name = "population",namespace="http://j2eeweb.wannshan.cn/hr/schemas")
-    public Integer getPopulation() {
-        return population;
+    public int getPopulation() {
+        return this.population;
     }
 
-    public void setPopulation(Integer population) {
-        this.population = population;
+    public void setPopulation(int value) {
+        this.population = value;
     }
 
-    @XmlElement(name = "capital",namespace="http://j2eeweb.wannshan.cn/hr/schemas")
     public String getCapital() {
-        return capital;
+        return this.capital;
     }
 
-    public void setCapital(String capital) {
-        this.capital = capital;
-    }
-
-    @XmlElement(name = "currency",namespace="http://j2eeweb.wannshan.cn/hr/schemas")
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setCapital(String value) {
+        this.capital = value;
     }
 }

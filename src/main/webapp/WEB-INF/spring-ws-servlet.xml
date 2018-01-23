@@ -9,7 +9,7 @@
         http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd
         http://www.springframework.org/schema/mvc  http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
-    <context:component-scan base-package="cn.wannshan.j2ee"></context:component-scan>
+    <context:component-scan base-package="cn.wannshan.j2ee.ws"></context:component-scan>
 
     <bean id="exceptionResolver"
           class="org.springframework.ws.soap.server.endpoint.SoapFaultMappingExceptionResolver">
@@ -21,10 +21,15 @@
         </property>
     </bean>
     <sws:annotation-driven/>
+    <!--动态生成wsdl文件url http://host:port/webservice/queryService/queryContry.wsdl-->
         <sws:dynamic-wsdl id="queryContry"
                           portTypeName="query"
                           locationUri="/webservice/queryService/"
                           targetNamespace="http://j2eeweb.wannshan.cn/hr/schemas">
         <sws:xsd location="/WEB-INF/hr.xsd"/>
         </sws:dynamic-wsdl>
+        <!--静态wsdl文件 一般现有动态生成，最后上生产考到静态文件中去-->
+    <!--<sws:static-wsdl id="queryContry" location="/WEB-INF/queryContry.wsdl"/>-->
+
+
 </beans>
