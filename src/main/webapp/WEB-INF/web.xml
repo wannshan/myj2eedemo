@@ -51,6 +51,15 @@
 		<servlet-name>springMvc</servlet-name>
 		<url-pattern>*.action</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>spring-ws</servlet-name>
+		<servlet-class>org.springframework.ws.transport.http.MessageDispatcherServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>spring-ws</servlet-name>
+		<url-pattern>/webservice/*</url-pattern>
+	</servlet-mapping>
 	<session-config>
 		<session-timeout>20</session-timeout>
 	</session-config>

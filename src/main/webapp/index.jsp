@@ -20,27 +20,7 @@
 	<script type="text/javascript">
 //页面加载后执行
 			$(function(){
-
 				// 百度地图API功能
-//				var map = new BMap.Map("container");
-//				map.centerAndZoom(new BMap.Point(121.355053,31.229125), 15);
-//				map.enableScrollWheelZoom();
-//
-//				var polyline = new BMap.Polyline([
-//								new BMap.Point(121.355053,31.229125),
-//								new BMap.Point(121.335629,31.229185),
-//								new BMap.Point(121.325097,31.227451)
-//				], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});   //创建折线
-//				map.addOverlay(polyline);   //增加折线
-
-//				var polygon = new BMap.Polygon([
-//					new BMap.Point(116.387112,39.920977),
-//					new BMap.Point(116.385243,39.913063),
-//					new BMap.Point(116.394226,39.917988),
-//					new BMap.Point(116.401772,39.921364),
-//					new BMap.Point(116.41248,39.927893)
-//				], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});  //创建多边形
-//				map.addOverlay(polygon);   //增加多边形
 				var reourceMap = new BMap.Map("container");
 				var point = new BMap.Point(121.355053,31.229125);
 				reourceMap.centerAndZoom(point, 15);
@@ -52,7 +32,6 @@
 				reourceMap.addEventListener("tilesloaded",dogetpointhistory);
 
 				function dogetpointhistory(){
-
 					reourceMap.removeEventListener("tilesloaded",dogetpointhistory);
 					$.ajax({
 						url : '/data/gps.json',
@@ -70,7 +49,25 @@
 							}
 
 				});
+				};
+				var searchComplete = function (results) {
+					var plan = results.getPlan(0);
+					alert(plan.getDistance(false));
 				}
+				var transit = new BMap.DrivingRoute(reourceMap, {renderOptions: {map: reourceMap},
+					onSearchComplete: searchComplete,
+				});
+
+				var beginPoint = new BMap.Point("121.255261", "31.157828");
+				var endPoint = new BMap.Point("121.335836", "30.731636");
+				try{
+					transit.search(beginPoint, endPoint);
+				} catch(error) {
+                   alert('ccc');
+				}
+
+
+
 			});
 </script>
 </html>

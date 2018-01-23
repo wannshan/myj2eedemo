@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean  id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="10"/>
+        <property name="maxIdle" value="3"/>
+        <property name="maxWaitMillis"  value="3000"/>
+        <property  name="testOnBorrow" value="false"/>
+    </bean>
+    <bean id="jedisPoolShard1" class="cn.wannshan.j2ee.cache.MyJedisPool">
+         <constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
+         <constructor-arg name="host" value="192.168.64.128"></constructor-arg>
+         <constructor-arg name="port" value="6379"></constructor-arg>
+         <constructor-arg name="nodeName" value="192.168.64.128:123"></constructor-arg>
+    </bean>
+    <bean id="jedisPoolShard2" class="cn.wannshan.j2ee.cache.MyJedisPool">
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
+        <constructor-arg name="host" value="192.168.64.128"></constructor-arg>
+        <constructor-arg name="port" value="6380"></constructor-arg>
+        <constructor-arg name="nodeName" value="192.168.64.128:456"></constructor-arg>
+    </bean>
+    <bean id="jedisPoolShard3" class="cn.wannshan.j2ee.cache.MyJedisPool">
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
+        <constructor-arg name="host" value="192.168.64.128"></constructor-arg>
+        <constructor-arg name="port" value="6381"></constructor-arg>
+        <constructor-arg name="nodeName" value="192.168.64.128:789"></constructor-arg>
+    </bean>
+
+    <util:map id="jedisPoolMap">
+        <entry key="jedisPoolShard1" value-ref="jedisPoolShard1" />
+        <entry key="jedisPoolShard2" value-ref="jedisPoolShard2"/>
+        <entry key="jedisPoolShard3" value-ref="jedisPoolShard3"/>
+    </util:map>
+
+    <bean id="redisShardService" class="cn.wannshan.j2ee.cache.RedisShardService" init-method="init">
+
+        <property name="jedisPoolMap" ref="jedisPoolMap"></property>
+    </bean>
+</beans>
