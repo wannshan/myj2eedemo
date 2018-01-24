@@ -1,19 +1,19 @@
 package cn.wannshan.test;
 
-import cn.wannshan.j2ee.ws.dto.GetCountryRequest;
-import cn.wannshan.j2ee.ws.dto.GetCountryResponse;
+import cn.wannshan.j2ee.ws.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.ws.client.core.WebServiceTemplate;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import javax.xml.bind.JAXBException;
 
 /**
- * �ļ����ܣ�xxxx
- * Created by  on 2018/1/23.
+ *
+ * Created by  on
  */
 @ContextConfiguration(locations={
         "classpath:spring/spring.xml",
@@ -24,20 +24,28 @@ public class MyTest extends AbstractTestNGSpringContextTests {
     WebServiceTemplate webServiceTemplate;
 
     @Test
-    public void testGetPullCase() throws JAXBException {
+    public void testWebservice() throws JAXBException {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        // this package must match the package in the <generatePackage> specified in
-        // pom.xml
+        //这是个包名，是你利用maven插件根据xsd文件生成pojo类，存放包名
         marshaller.setContextPath("cn.wannshan.j2ee.ws.dto");
-//        marshaller.s
+        //指定Jaxb方案实现类。spring提供Jaxb2Marshaller
         webServiceTemplate.setMarshaller(marshaller);
         webServiceTemplate.setUnmarshaller(marshaller);
 
+        //查询Country
         GetCountryRequest getCountryRequest=new GetCountryRequest();
         getCountryRequest.setName("Spain");
-
         GetCountryResponse getCountryResponse= (GetCountryResponse) webServiceTemplate.marshalSendAndReceive(getCountryRequest);
+        Assert.assertEquals(getCountryResponse.getCountry().getName(), "Spain");
 
-        System.out.println(getCountryResponse.getCountry().getName());
+        //保存Country
+        Country country=new Country();
+        country.setName("中国");
+        country.setCapital("北京");
+        country.setPopulation(1400000000);
+        SaveCountryRequest saveCountryRequest=new SaveCountryRequest();
+        saveCountryRequest.setCountry(country);
+        SaveCountryResponse saveCountryResponse= (SaveCountryResponse) webServiceTemplate.marshalSendAndReceive(saveCountryRequest);
+        Assert.assertEquals(saveCountryResponse.getName(), "中国");
     }
 }

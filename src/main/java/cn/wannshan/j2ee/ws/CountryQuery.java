@@ -7,7 +7,7 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 /**
- * 文件功能：xxxx
+ * xxx
  * Created by  on 2018/1/22.
  */
 @Endpoint
@@ -18,25 +18,32 @@ public class CountryQuery {
     @Autowired
     CountryRepository countryRepository;
 
+    /***
+     * 鏌ヨcountry
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountryRequest")
     @ResponsePayload
     public GetCountryResponse queryCountry(@RequestPayload GetCountryRequest request) throws Exception {
         GetCountryResponse response = new GetCountryResponse();
-//        Country country=new Country();
-//        country.setName("中国");
-//        country.setCapital("北京");
-//        country.setCurrency("人民币");
-//        country.setPopulation(1400000000);
-//        response.setCountry(country);
         response.setCountry(countryRepository.findCountry(request.getName()));
         return response;
     }
 
+    /**
+     * 淇濆瓨country
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "saveCountryRequest")
     @ResponsePayload
     public SaveCountryResponse saveCountry(@RequestPayload SaveCountryRequest request) throws Exception {
         SaveCountryResponse response = new SaveCountryResponse();
-        response.setName("china");
+        countryRepository.putCounttry(request.getCountry());
+        response.setName(request.getCountry().getName());
         return response;
     }
 

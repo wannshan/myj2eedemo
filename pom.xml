@@ -103,6 +103,7 @@
             </executions>
             <configuration>
                 <schemaLanguage>WSDL</schemaLanguage>
+                <!--pojo存放包名-->
                 <generatePackage>cn.wannshan.j2ee.ws.dto</generatePackage>
                 <schemas>
                     <schema>

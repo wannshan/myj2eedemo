@@ -1,8 +1,8 @@
 package cn.wannshan.j2ee.common.pojo;
 
 /**
- * 文件功能：xxxx
- * Created by yufei on 2017/8/23.
+ *
+ * Created by  on 2017/8/23.
  */
 public class CacheHost {
     private String name;

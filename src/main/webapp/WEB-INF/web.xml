@@ -58,6 +58,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>spring-ws</servlet-name>
+		<!--webservice拦截路径-->
 		<url-pattern>/webservice/*</url-pattern>
 	</servlet-mapping>
 	<session-config>

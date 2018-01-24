@@ -11,6 +11,7 @@
 
     <bean id="webServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
         <constructor-arg ref="messageFactory"/>
+        <!--webserivce服务地址-->
         <property name="defaultUri" value="http://localhost:8080/webservice/queryService"/>
     </bean>
 </beans>
