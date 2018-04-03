@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 文件功能：xxxx
+ *
  * Created by yufei on 2017/8/23.
  */
 @Service
@@ -43,7 +43,7 @@ public class RedisShardService {
     }
 
     /***
-     * 获取连接,@TODO做个连接池
+     *
      */
     public void selectRedisPool(String key){
         init();

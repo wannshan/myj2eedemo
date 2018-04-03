@@ -3,6 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
@@ -32,14 +33,35 @@
         <constructor-arg name="nodeName" value="192.168.64.128:789"></constructor-arg>
     </bean>
 
+
+    <!-- jedis pool配置 -->
+    <!-- spring data redis -->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          p:host-name="192.168.64.128" p:port="6379" p:poolConfig-ref="jedisPoolConfig"
+    />
+
     <util:map id="jedisPoolMap">
         <entry key="jedisPoolShard1" value-ref="jedisPoolShard1" />
-        <entry key="jedisPoolShard2" value-ref="jedisPoolShard2"/>
-        <entry key="jedisPoolShard3" value-ref="jedisPoolShard3"/>
+        <!--<entry key="jedisPoolShard2" value-ref="jedisPoolShard2"/>-->
+        <!--<entry key="jedisPoolShard3" value-ref="jedisPoolShard3"/>-->
     </util:map>
 
     <bean id="redisShardService" class="cn.wannshan.j2ee.cache.RedisShardService" init-method="init">
-
         <property name="jedisPoolMap" ref="jedisPoolMap"></property>
+    </bean>
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+          p:connection-factory-ref="jedisConnectionFactory"/>
+     <bean id="redisCacheWriter" class="org.springframework.data.redis.cache.DefaultRedisCacheWriter">
+         <constructor-arg  ref="jedisConnectionFactory"></constructor-arg>
+     </bean>
+
+    <bean id="defaultCacheConfiguration" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass" value="org.springframework.data.redis.cache.RedisCacheConfiguration"/>
+        <property name="targetMethod" value="defaultCacheConfig"/>
+    </bean>
+    <bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+           <constructor-arg name="cacheWriter" ref="redisCacheWriter"></constructor-arg>
+           <constructor-arg name="defaultCacheConfiguration" ref="defaultCacheConfiguration"></constructor-arg>
     </bean>
 </beans>
